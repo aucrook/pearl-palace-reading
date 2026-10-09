@@ -268,6 +268,76 @@
     .choice { min-height: 82px; }
     .hero { font-size: 3.6rem; }
   }
+  /* ---- Bubble Pop ---- */
+  .tank {
+    position: relative; width: 100%; max-width: 600px; height: clamp(300px, 46vh, 500px);
+    border-radius: 26px; overflow: hidden; border: 4px solid #fff;
+    background: linear-gradient(180deg, #d9f7fa 0%, #a9e6ee 55%, #7fd3e0 100%);
+    box-shadow: 0 6px 0 #a7e3e8, inset 0 0 40px rgba(255,255,255,0.5);
+  }
+  .tank::after { content: "🪸 🐚 🌿 🪸 🐚 🌿"; position: absolute; left: 0; right: 0; bottom: 2px; font-size: 26px; letter-spacing: 10px; text-align: center; opacity: 0.85; pointer-events: none; }
+  .bubble-btn {
+    position: absolute; width: clamp(100px, 26vw, 150px); height: clamp(100px, 26vw, 150px); border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.95); cursor: pointer; touch-action: manipulation; padding: 0;
+    background: radial-gradient(circle at 30% 28%, #fff 0 12%, rgba(255,255,255,0.75) 22%, rgba(231,215,255,0.6) 55%, rgba(127,221,228,0.55) 100%);
+    box-shadow: inset -6px -8px 18px rgba(138,104,224,0.25), 0 8px 18px rgba(31,159,174,0.25);
+    font-family: var(--read-font); font-weight: 700; color: var(--ink); font-size: clamp(1.7rem, 7vw, 2.5rem);
+    display: flex; align-items: center; justify-content: center;
+    animation: bubbleIn 1.1s cubic-bezier(.2,.9,.3,1.1) both, bob 3.2s ease-in-out 1.1s infinite;
+  }
+  .bubble-btn:focus-visible { outline: 4px solid var(--pink-deep); outline-offset: 3px; }
+  .bubble-btn.oops { animation: wobble 0.5s ease; }
+  .bubble-btn.faded { opacity: 0.35; }
+  .bubble-btn.popped { animation: popOut 0.45s ease forwards; pointer-events: none; }
+  @keyframes bubbleIn { from { transform: translateY(330px) scale(0.6); opacity: 0; } to { transform: none; opacity: 1; } }
+  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+  @keyframes popOut { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.3); opacity: 0.8; } 100% { transform: scale(1.6); opacity: 0; } }
+  .mini-prompt { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+  .mini-prompt .w { font-family: var(--read-font); font-weight: 700; font-size: clamp(2.2rem, 10vw, 3.4rem); color: var(--lav-deep); background: #fff; border: 3px solid #e6dcff; border-radius: 20px; padding: 2px 22px; min-width: 2.5ch; }
+  .mini-prompt .w.ear { cursor: pointer; }
+
+  /* ---- Treasure Chest Match ---- */
+  .chest-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(10px, 2.6vw, 18px); width: 100%; max-width: 600px; }
+  .chest {
+    position: relative; min-height: clamp(104px, 25vw, 160px); border-radius: 22px; cursor: pointer; touch-action: manipulation;
+    border: 4px solid #ffe08a; padding: 6px; font-family: var(--read-font); font-weight: 700;
+    background:
+      linear-gradient(180deg, transparent 38%, #ffd76a 38%, #ffd76a 46%, transparent 46%),
+      linear-gradient(180deg, #d79a4e 0%, #b06d2c 60%, #8e521c 100%);
+    box-shadow: 0 7px 0 #6e3d12, 0 12px 20px rgba(110,61,18,0.25);
+    transition: transform 0.25s ease, background 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .chest .lock { font-size: clamp(1.8rem, 8vw, 2.6rem); filter: drop-shadow(0 2px 2px rgba(0,0,0,0.25)); }
+  .chest .word { display: none; font-size: clamp(1.7rem, 7.5vw, 2.6rem); color: var(--ink); }
+  .chest.open { background: radial-gradient(circle at 50% 30%, #fff 0%, #fff3fa 60%, #ffe3f1 100%); border-color: #ffd0e5; box-shadow: 0 7px 0 #f7bcd6; transform: rotateY(360deg); }
+  .chest.open .lock { display: none; }
+  .chest.open .word { display: block; }
+  .chest.matched { background: radial-gradient(circle at 50% 30%, #fffbe6 0%, #fff0b3 100%); border-color: var(--gold); box-shadow: 0 7px 0 #e0b84a, 0 0 22px rgba(255,215,106,0.8); }
+  .chest.matched::after { content: "💎"; position: absolute; top: -12px; right: -6px; font-size: 1.6rem; animation: spin 0.8s ease; }
+  .chest:focus-visible { outline: 4px solid var(--aqua-deep); outline-offset: 3px; }
+  .chest[disabled] { cursor: default; }
+
+  /* ---- Magic Mirror ---- */
+  .prompt.mirror { border: 6px solid var(--gold); border-radius: 50% 50% 28px 28px / 38% 38% 28px 28px; background: radial-gradient(ellipse at 50% 35%, #ffffff 0%, #eef9ff 55%, #dcd2ff 100%); box-shadow: 0 6px 0 #e0b84a, 0 0 26px rgba(255,215,106,0.55); padding-top: 26px; }
+  .choice.pic { font-size: clamp(3rem, 14vw, 4.6rem); font-family: inherit; }
+
+  /* ---- Seashell Sentences ---- */
+  .sentence-art { font-size: clamp(3rem, 13vw, 4.6rem); line-height: 1.1; animation: floaty 4s ease-in-out infinite; }
+  .slots { display: flex; flex-wrap: wrap; gap: 10px 12px; justify-content: center; align-items: flex-end; min-height: 76px; width: 100%; max-width: 600px; }
+  .slot {
+    min-width: 3.4ch; padding: 4px 10px; border-bottom: 5px dotted var(--lav); font-family: var(--read-font); font-weight: 700;
+    font-size: clamp(1.8rem, 8vw, 2.7rem); color: transparent; line-height: 1.2; border-radius: 6px;
+  }
+  .slot.next { border-bottom-color: var(--pink); background: rgba(255,143,191,0.12); animation: pulseSlot 1.2s ease-in-out infinite; }
+  .slot.filled { color: var(--ink); border-bottom: 5px solid var(--good); animation: pop 0.4s ease; }
+  .slot .punct { color: var(--ink); }
+  @keyframes pulseSlot { 50% { background: rgba(255,143,191,0.28); } }
+  .shell-bank { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; width: 100%; max-width: 600px; }
+  .choice.shell { flex: 0 1 auto; min-width: clamp(104px, 27vw, 150px); border-radius: 50% 50% 26px 26px / 40% 40% 26px 26px; padding: 18px 16px 10px; flex-direction: column; gap: 0; }
+  .choice.shell .pic { font-size: 1.6rem; line-height: 1; }
+  .choice.shell.used { visibility: hidden; }
+
   @media (min-width: 700px) and (min-height: 760px) {
     .prompt, .choices, .scene { max-width: 600px; }
     .choice { min-height: 150px; font-size: 4.4rem; border-radius: 32px; }
@@ -281,6 +351,8 @@
     .level-tile { min-height: 160px; font-size: 1.3rem; }
     .level-tile .ico { font-size: 3.2rem; }
     .btn { min-height: 76px; }
+    .tank, .chest-grid, .slots, .shell-bank { max-width: 640px; }
+    .chest { min-height: 170px; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
@@ -295,7 +367,7 @@
   <div class="hud" role="toolbar" aria-label="Game controls">
     <button class="hud-btn" id="homeBtn" type="button" aria-label="Go to the palace map">🏰</button>
     <div class="hud-mid">
-      <div class="hud-title" id="hudTitle">Pearl Letter Hunt</div>
+      <div class="hud-title" id="hudTitle">Sound Shells</div>
       <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress"><div class="progress-fill" id="progressFill"></div></div>
     </div>
     <div class="pearl-pill" id="pearlPill" aria-live="polite"><span class="pearl" aria-hidden="true"></span><span id="pearlCount">0</span><span class="sr-only"> pearls</span></div>
@@ -335,14 +407,14 @@
   <section class="screen" id="s-intro" aria-labelledby="introTitle">
     <div class="card">
       <span class="level-badge" id="introBadge">Level 1</span>
-      <div class="hero" id="introHero" aria-hidden="true">💎</div>
-      <h2 id="introTitle">Pearl Letter Hunt</h2>
+      <div class="hero" id="introHero" aria-hidden="true">🐚</div>
+      <h2 id="introTitle">Sound Shells</h2>
       <p class="story" id="introStory"></p>
       <button class="btn" id="introGo" type="button">Let’s go! 🌊</button>
     </div>
   </section>
 
-  <!-- GAME (shared for letters / sounds / sight words) -->
+  <!-- GAME (shared: Sound Shells, Sight Word Sparkles, Magic Mirror) -->
   <section class="screen" id="s-game" aria-labelledby="gameLabel">
     <div class="card">
       <div class="prompt" id="prompt">
@@ -369,6 +441,36 @@
       <p class="story-line" id="storyLine"></p>
       <div class="choices three" id="storyChoices" role="group" aria-label="Word choices"></div>
       <div class="feedback" id="storyFeedback" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- BUBBLE POP -->
+  <section class="screen" id="s-bubbles" aria-labelledby="bubbleLabel">
+    <div class="card">
+      <div class="prompt-label" id="bubbleLabel">Pop the bubble that says…</div>
+      <div class="mini-prompt"><span class="w" id="bubbleWord">see</span></div>
+      <div class="tank" id="tank" role="group" aria-label="Word bubbles"></div>
+      <div class="feedback" id="bubbleFeedback" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- TREASURE CHEST MATCH -->
+  <section class="screen" id="s-treasure" aria-labelledby="treasureLabel">
+    <div class="card">
+      <div class="prompt-label" id="treasureLabel">Open two chests. Find the words that match!</div>
+      <div class="chest-grid" id="chestGrid" role="group" aria-label="Treasure chests"></div>
+      <div class="feedback" id="treasureFeedback" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- SEASHELL SENTENCES -->
+  <section class="screen" id="s-shells" aria-labelledby="shellLabel">
+    <div class="card">
+      <div class="prompt-label" id="shellLabel">Tap the shells in order to build the sentence!</div>
+      <div class="sentence-art" id="sentenceArt" aria-hidden="true">🐠</div>
+      <div class="slots" id="slots" aria-live="polite"></div>
+      <div class="shell-bank" id="shellBank" role="group" aria-label="Word shells"></div>
+      <div class="feedback" id="shellFeedback" aria-live="polite"></div>
     </div>
   </section>
 
@@ -402,118 +504,186 @@
 (function () {
   "use strict";
 
-  /* ---------------- Data ---------------- */
-  var LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-  // Letters that look alike when lowercase; avoid putting them together for beginners.
-  var LOOKALIKE = { b: "dpq", d: "bpq", p: "bdq", q: "bdp", m: "nw", n: "mu", u: "nv", w: "mv", i: "jl", l: "i", j: "i" };
-
-  // Phonics: say = what the voice says for the sound (TTS-friendly), word/pic = anchor.
+  /* ================= Data ================= */
+  // Phonics warm-up: say = what the voice says for the sound (TTS-friendly), word/pic = anchor.
   var SOUNDS = [
-    { L: "M", say: "mmm",   word: "mermaid",  pic: "🧜‍♀️" },
-    { L: "S", say: "sss",   word: "sea",      pic: "🌊" },
-    { L: "P", say: "puh",   word: "pearl",    pic: "⚪" },
-    { L: "C", say: "kuh",   word: "crown",    pic: "👑" },
-    { L: "F", say: "fff",   word: "fish",     pic: "🐠" },
-    { L: "B", say: "buh",   word: "bubble",   pic: "🫧" },
-    { L: "D", say: "duh",   word: "dolphin",  pic: "🐬" },
-    { L: "T", say: "tuh",   word: "turtle",   pic: "🐢" },
-    { L: "W", say: "wuh",   word: "wave",     pic: "🌊" },
-    { L: "L", say: "lll",   word: "love",     pic: "💖" },
-    { L: "R", say: "rrr",   word: "rainbow",  pic: "🌈" },
-    { L: "G", say: "guh",   word: "gold",     pic: "🪙" },
-    { L: "H", say: "huh",   word: "heart",    pic: "💗" },
-    { L: "N", say: "nnn",   word: "night",    pic: "🌙" },
-    { L: "Z", say: "zzz",   word: "zebra fish", pic: "🦓" },
-    { L: "A", say: "ah",    word: "apple",    pic: "🍎" },
-    { L: "O", say: "oh",    word: "octopus",  pic: "🐙" },
-    { L: "K", say: "kuh",   word: "king",     pic: "🤴" }
+    { L: "M", say: "mmm", word: "mermaid", pic: "🧜‍♀️" },
+    { L: "S", say: "sss", word: "sea", pic: "🌊" },
+    { L: "P", say: "puh", word: "pearl", pic: "⚪" },
+    { L: "C", say: "kuh", word: "crown", pic: "👑" },
+    { L: "F", say: "fff", word: "fish", pic: "🐠" },
+    { L: "B", say: "buh", word: "bubble", pic: "🫧" },
+    { L: "D", say: "duh", word: "dolphin", pic: "🐬" },
+    { L: "T", say: "tuh", word: "turtle", pic: "🐢" },
+    { L: "W", say: "wuh", word: "wave", pic: "🌊" },
+    { L: "L", say: "lll", word: "love", pic: "💖" },
+    { L: "R", say: "rrr", word: "rainbow", pic: "🌈" },
+    { L: "G", say: "guh", word: "gold", pic: "🪙" },
+    { L: "H", say: "huh", word: "heart", pic: "💗" },
+    { L: "N", say: "nnn", word: "night", pic: "🌙" },
+    { L: "Z", say: "zzz", word: "zebra fish", pic: "🦓" },
+    { L: "A", say: "ah", word: "apple", pic: "🍎" },
+    { L: "O", say: "oh", word: "octopus", pic: "🐙" },
+    { L: "K", say: "kuh", word: "king", pic: "🤴" }
   ];
-  // C and K share a sound; never offer both in one round.
-  var SAME_SOUND = { C: "K", K: "C" };
+  var SAME_SOUND = { C: "K", K: "C" }; // never offer both in one round
 
-  var SIGHT = [
-    { w: "I",    pic: "🙋‍♀️", line: "I am a princess." },
-    { w: "a",    pic: "🐚",   line: "I see a shell." },
-    { w: "the",  pic: "🌊",   line: "I love the sea." },
-    { w: "see",  pic: "👀",   line: "I see a fish." },
-    { w: "me",   pic: "🤗",   line: "Swim with me!" },
-    { w: "you",  pic: "🫵",   line: "I love you." },
-    { w: "love", pic: "💖",   line: "I love my crown." },
-    { w: "go",   pic: "🏊‍♀️", line: "Go, go, go!" },
-    { w: "to",   pic: "🏰",   line: "Swim to the palace." },
-    { w: "my",   pic: "👑",   line: "This is my crown." }
+  // 25 sight words, introduced in three waves (set 1 → 2 → 3).
+  var WORDS = [
+    { w: "I", set: 1, pic: "🙋‍♀️", line: "I am a princess." },
+    { w: "a", set: 1, pic: "🐚", line: "I see a shell." },
+    { w: "the", set: 1, pic: "🌊", line: "I love the sea." },
+    { w: "see", set: 1, pic: "👀", line: "I see a fish." },
+    { w: "me", set: 1, pic: "🤗", line: "Swim with me!" },
+    { w: "you", set: 1, pic: "🫵", line: "I love you." },
+    { w: "love", set: 1, pic: "💖", line: "I love my crown." },
+    { w: "go", set: 1, pic: "🏃‍♀️", line: "Go, go, go!" },
+    { w: "to", set: 1, pic: "🏰", line: "Swim to the palace." },
+    { w: "my", set: 1, pic: "👑", line: "This is my crown." },
+    { w: "is", set: 2, pic: "🐬", line: "It is a dolphin." },
+    { w: "it", set: 2, pic: "🎁", line: "I like it!" },
+    { w: "in", set: 2, pic: "📦", line: "The pearl is in the shell." },
+    { w: "can", set: 2, pic: "🏊‍♀️", line: "I can swim!" },
+    { w: "we", set: 2, pic: "👭", line: "We are friends." },
+    { w: "like", set: 2, pic: "👍", line: "I like the sea." },
+    { w: "and", set: 2, pic: "➕", line: "You and me!" },
+    { w: "up", set: 2, pic: "🎈", line: "Up, up, up!" },
+    { w: "look", set: 3, pic: "🔍", line: "Look at the fish!" },
+    { w: "here", set: 3, pic: "📍", line: "Come here!" },
+    { w: "play", set: 3, pic: "⚽", line: "Let's play!" },
+    { w: "red", set: 3, pic: "🔴", line: "A red crab!" },
+    { w: "big", set: 3, pic: "🐳", line: "A big whale!" },
+    { w: "said", set: 3, pic: "💬", line: "Coral said hello." },
+    { w: "no", set: 3, pic: "🙅‍♀️", line: "No, thank you!" }
+  ];
+  function wordsInSets(sets) { return WORDS.filter(function (x) { return sets.indexOf(x.set) !== -1; }); }
+  function wordObj(w) { for (var i = 0; i < WORDS.length; i++) if (WORDS[i].w === w) return WORDS[i]; return { w: w, pic: "✨", line: w }; }
+
+  // Magic Mirror: words with a clear picture meaning (child reads the word, taps the picture).
+  var MIRROR = [
+    { w: "red", pic: "🔴", say: "a red circle" },
+    { w: "up", pic: "🎈⬆️", say: "a balloon going up" },
+    { w: "look", pic: "👀", say: "eyes looking" },
+    { w: "play", pic: "⚽", say: "a ball to play with" },
+    { w: "no", pic: "🙅‍♀️", say: "a girl saying no" },
+    { w: "love", pic: "💖", say: "a love heart" },
+    { w: "go", pic: "🏃‍♀️", say: "a girl who can go fast" },
+    { w: "we", pic: "👭", say: "two friends together" },
+    { w: "big", pic: "🐳", say: "a big whale" },
+    { w: "in", pic: "🐚⚪", say: "a pearl in a shell" },
+    { w: "I", pic: "🙋‍♀️", say: "a girl pointing at herself" }
   ];
 
-  // Story Path: each page has a sentence with one missing word.
+  // Seashell Sentences, shortest first.
+  var SENTENCES = [
+    { words: ["I", "can", "play."], art: "🧜‍♀️⚽" },
+    { words: ["We", "go", "up!"], art: "🐬🎈" },
+    { words: ["I", "love", "you."], art: "👸💖🧜‍♀️" },
+    { words: ["It", "is", "big!"], art: "🐳" },
+    { words: ["Look", "at", "me!"], art: "🧜‍♀️✨" },
+    { words: ["I", "see", "a", "fish."], art: "👀🐠" },
+    { words: ["I", "like", "my", "crown."], art: "👑💕" },
+    { words: ["The", "fish", "is", "red."], art: "🐠🔴" },
+    { words: ["You", "and", "me", "play!"], art: "👭⚽" },
+    { words: ["Come", "here", "to", "the", "palace!"], art: "🏰🌊" }
+  ];
+  var NOUN_PICS = { fish: "🐠", crown: "👑", palace: "🏰", play: "⚽", big: "🐳", red: "🔴" };
+
+  // Story Path: one missing word per page.
   var STORY = [
-    { art: "🧜‍♀️🌊🏰", words: ["I", "{see}", "the", "palace."],           choices: ["see", "go", "me"],    after: "Princess Coral waves hello!" },
-    { art: "🐠🐟🐡",   words: ["I", "see", "a", "{fish}."],               choices: ["fish", "cat", "sun"],  after: "Splash! The fish wants to play." },
-    { art: "🐚✨⚪",   words: ["The", "pearl", "is", "in", "{the}", "shell."], choices: ["the", "my", "to"], after: "A magic pearl! Shiny and bright." },
-    { art: "🧜‍♀️💖👸", words: ["Coral", "says,", "“I", "{love}", "you!”"], choices: ["love", "see", "go"], after: "What a kind mermaid friend." },
-    { art: "🐬🌊🫧",   words: ["We", "{go}", "up,", "up,", "up!"],        choices: ["go", "the", "a"],     after: "Wheee! The dolphin gives us a ride." },
-    { art: "🏰👑✨",   words: ["The", "crown", "is", "for", "{me}!"],      choices: ["me", "you", "I"],     after: "The palace sparkles with every pearl!" }
+    { art: "🧜‍♀️🌊🏰", words: ["I", "{see}", "the", "palace."], choices: ["see", "go", "me"], after: "Princess Coral waves hello!" },
+    { art: "🧜‍♀️💬👋", words: ["“Hello!”", "{said}", "Coral."], choices: ["said", "up", "big"], after: "What a friendly mermaid!" },
+    { art: "🐚✨⚪", words: ["The", "pearl", "is", "{in}", "the", "shell."], choices: ["in", "no", "red"], after: "A magic pearl! Shiny and bright." },
+    { art: "🐠🔴🫧", words: ["I", "like", "the", "{red}", "fish."], choices: ["red", "and", "here"], after: "Splash! The red fish wants to play." },
+    { art: "🐬🌊🫧", words: ["We", "go", "{up},", "up,", "up!"], choices: ["up", "is", "look"], after: "Wheee! The dolphin gives us a ride." },
+    { art: "🏰👑✨", words: ["The", "crown", "is", "for", "{me}!"], choices: ["me", "can", "it"], after: "The palace sparkles with every pearl!" }
   ];
 
   var LEVELS = {
-    letters: { n: 1, title: "Pearl Letter Hunt", ico: "💎", rounds: 10,
-      story: "Magic pearls are hiding inside letters! Look at each letter, then tap its twin to set a pearl free. Get it on your first try for TWO pearls!" },
-    sounds:  { n: 2, title: "Sound Shells", ico: "🐚", rounds: 8,
-      story: "Hold a shell to your ear… it whispers a sound! Tap the letter that makes that sound." },
-    sight:   { n: 3, title: "Sight Word Sparkles", ico: "✨", rounds: 8,
+    sounds: { title: "Sound Shells", ico: "🐚", rounds: 6,
+      story: "Hold a shell to your ear… it whispers a sound! Tap the letter that makes that sound. Get it on your first try for TWO pearls!" },
+    sight: { title: "Sight Word Sparkles", ico: "✨", rounds: 8,
       story: "Some words are so magic, readers know them by heart. Find the sparkly word!" },
-    story:   { n: 4, title: "Story Path", ico: "📖", rounds: STORY.length,
+    bubbles: { title: "Bubble Pop", ico: "🫧", rounds: 8,
+      story: "Princess Coral blew magic word bubbles! Listen carefully, then pop the bubble with the right word." },
+    treasure: { title: "Treasure Chest Match", ico: "💰", rounds: 6,
+      story: "Sunken treasure! Open two chests at a time. When the words match, you win a pearl!" },
+    mirror: { title: "Magic Mirror", ico: "🪞", rounds: 6,
+      story: "The magic mirror shows a word. Read it all by yourself, then tap the picture that goes with it!" },
+    shells: { title: "Seashell Sentences", ico: "🐚", rounds: 6,
+      story: "Each seashell holds a word. Tap them in order to build a sentence, and the sea will read it back to you!" },
+    story: { title: "Story Path", ico: "📖", rounds: STORY.length,
       story: "Now YOU help tell Princess Coral’s story! Tap the word that fits, and swim to the palace." }
   };
-  var ORDER = ["letters", "sounds", "sight", "story"];
+  var ORDER = ["sounds", "sight", "bubbles", "treasure", "mirror", "shells", "story"];
+  var SCREEN_OF = { sounds: "game", sight: "game", mirror: "game", bubbles: "bubbles", treasure: "treasure", shells: "shells", story: "story" };
 
   var CHEERS = ["You did it, {n}!", "Sparkle-tastic!", "Wonderful reading!", "A pearl for you!", "Yay, {n}!", "So clever!", "Fin-tastic!", "Royal work!", "Splash-tacular!", "You’re a star, {n}!"];
   var GENTLE = ["Almost! Try another one.", "Ooh, so close! Look again.", "Hmm, let’s try again!", "That’s okay — try another!"];
 
-  /* ---------------- State & storage ---------------- */
+  /* ================= State & storage ================= */
   var store = {
     get: function (k, d) { try { var v = localStorage.getItem("ppq_" + k); return v === null ? d : v; } catch (e) { return d; } },
     set: function (k, v) { try { localStorage.setItem("ppq_" + k, String(v)); } catch (e) {} },
     del: function (k) { try { localStorage.removeItem("ppq_" + k); } catch (e) {} }
   };
+  // v2: level ids changed (Letter Hunt removed, new sight-word games). Keep only known level ids.
+  function loadDone() {
+    var raw = {};
+    try { raw = JSON.parse(store.get("done", "{}")) || {}; } catch (e) { raw = {}; }
+    if (typeof raw !== "object" || Array.isArray(raw)) raw = {};
+    var clean = {};
+    ORDER.forEach(function (k) { if (raw[k] === true) clean[k] = true; });
+    if (store.get("ver", "") !== "2") { store.set("ver", "2"); }
+    store.set("done", JSON.stringify(clean));
+    return clean;
+  }
 
   var S = {
     name: "Princess",
     pearls: 0, stars: 0, best: parseInt(store.get("best", "0"), 10) || 0,
     mode: "full", level: null, rounds: [], idx: 0, firstTry: true, busy: false,
     lastSay: "", voiceOn: store.get("voice", "1") !== "0",
-    done: JSON.parse(store.get("done", "{}") || "{}")
+    done: loadDone(), gen: 0
   };
-  if (typeof S.done !== "object" || !S.done) S.done = {};
 
-  /* ---------------- Helpers ---------------- */
+  /* ================= Helpers ================= */
   function $(id) { return document.getElementById(id); }
   function rand(a) { return a[Math.floor(Math.random() * a.length)]; }
   function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
   function fill(t) { return t.replace(/\{n\}/g, S.name); }
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function bare(w) { return String(w).replace(/[^A-Za-z']/g, ""); }
+  // Timers bound to the current screen "generation": leaving a level cancels its pending steps.
+  function later(fn, ms) { var g = S.gen; setTimeout(function () { if (g === S.gen) fn(); }, ms); }
+  function newGen() { S.gen++; }
+  function distractors(pool, answer, n) {
+    return shuffle(pool.filter(function (x) { return x.toLowerCase() !== answer.toLowerCase(); })).slice(0, n);
+  }
 
-  /* ---------------- Speech ---------------- */
+  /* ================= Speech ================= */
   var synth = ("speechSynthesis" in window) ? window.speechSynthesis : null;
   var voice = null;
   function pickVoice() {
     if (!synth) return;
     var vs = synth.getVoices() || [];
-    var en = vs.filter(function (v) { return /^en[-_]/i.test(v.lang) || /^en$/i.test(v.lang); });
+    var en = vs.filter(function (v) { return /^en([-_]|$)/i.test(v.lang); });
     var prefs = [/samantha/i, /ava/i, /allison/i, /susan/i, /google us english/i, /zira/i, /jenny/i, /aria/i, /female/i, /karen/i, /serena/i, /moira/i, /tessa/i];
     for (var i = 0; i < prefs.length && !voice; i++) { for (var j = 0; j < en.length; j++) { if (prefs[i].test(en[j].name)) { voice = en[j]; break; } } }
     if (!voice) voice = en.filter(function (v) { return /en[-_]US/i.test(v.lang); })[0] || en[0] || null;
   }
   if (synth) { pickVoice(); if ("onvoiceschanged" in synth) synth.onvoiceschanged = pickVoice; }
+  function canSpeak() { return !!(synth && S.voiceOn); }
 
-  // say(text) or say([part, part...]) — parts are spoken in order.
+  // say(text) or say([part, {t, rate}...]) — parts are spoken in order.
   function say(parts, remember) {
     if (typeof parts === "string") parts = [parts];
     if (remember !== false) S.lastSay = parts;
-    if (!synth || !S.voiceOn) return;
+    if (!canSpeak()) return;
     try {
       synth.cancel();
       parts.forEach(function (p) {
-        var text = typeof p === "string" ? p : p.t;
+        var text = typeof p === "string" ? p : p && p.t;
         if (!text) return;
         var u = new SpeechSynthesisUtterance(text);
         if (voice) u.voice = voice;
@@ -525,15 +695,12 @@
       if (synth.paused) synth.resume();
     } catch (e) { /* speech is optional */ }
   }
+  function hush() { if (synth) try { synth.cancel(); } catch (e) {} }
   function sayAgain() { if (S.lastSay) say(S.lastSay); }
-  function letterName(ch) { return ch === ch.toUpperCase() ? "big " + ch : "little " + ch.toUpperCase(); }
-  function letterSpeech(ch) {
-    // "A" alone can be read as the article; force the letter name.
-    var spoken = { A: "ay", a: "ay" }[ch] || ch.toUpperCase() + ".";
-    return (ch === ch.toUpperCase() ? "big " : "little ") + spoken;
-  }
+  // Single-letter words read oddly by TTS ("a" → "uh"); give the voice a clear version.
+  function spoken(w) { var b = bare(w); return b === "a" ? { t: "a", rate: 0.7 } : b === "I" ? { t: "I", rate: 0.7 } : { t: b, rate: 0.75 }; }
 
-  /* ---------------- FX ---------------- */
+  /* ================= FX ================= */
   function sparkle(x, y, n) {
     var fx = $("fx"), bits = ["✨", "⭐", "💖", "🌟", "🫧", "💎"];
     for (var i = 0; i < (n || 14); i++) {
@@ -593,18 +760,16 @@
     });
   }
 
-  /* ---------------- Navigation ---------------- */
+  /* ================= Navigation ================= */
   function show(id) {
     var screens = document.querySelectorAll(".screen");
     for (var i = 0; i < screens.length; i++) screens[i].classList.remove("active");
     $("s-" + id).classList.add("active");
-    document.body.classList.toggle("playing", id === "game" || id === "story" || id === "intro");
+    document.body.classList.toggle("playing", ["welcome", "map", "crown"].indexOf(id) === -1);
     window.scrollTo(0, 0);
-    // Move focus for keyboard + screen reader users.
     var h = $("s-" + id).querySelector("h1, h2, .prompt-label, .story-line");
     if (h) { h.setAttribute("tabindex", "-1"); try { h.focus({ preventScroll: true }); } catch (e) {} }
   }
-
   function setPearls(n, bump) {
     S.pearls = n; $("pearlCount").textContent = n;
     if (bump) { var p = $("pearlPill"); p.classList.remove("bump"); void p.offsetWidth; p.classList.add("bump"); }
@@ -614,42 +779,46 @@
     $("progressFill").style.width = pct + "%";
     $("progress").setAttribute("aria-valuenow", pct);
   }
-
   function readName() {
     var v = ($("nameInput").value || "").replace(/[^\p{L}\p{N} '\-]/gu, "").trim().slice(0, 16);
     S.name = v || "Princess";
     if (v) store.set("name", v); else store.del("name");
   }
 
-  /* ---------------- Flow ---------------- */
-  function startFull() {
-    S.mode = "full"; S.pearls = 0; S.stars = 0; setPearls(0);
-    openIntro("letters");
-  }
-  function startSingle(level) {
-    S.mode = "single"; S.pearls = 0; S.stars = 0; setPearls(0);
-    openIntro(level);
-  }
+  /* ================= Flow ================= */
+  function startFull() { S.mode = "full"; S.stars = 0; setPearls(0); openIntro(ORDER[0]); }
+  function startSingle(level) { S.mode = "single"; S.stars = 0; setPearls(0); openIntro(level); }
 
   function openIntro(level) {
+    newGen();
     S.level = level; S.busy = false;
-    var L = LEVELS[level];
+    var L = LEVELS[level], n = ORDER.indexOf(level) + 1;
+    var first = S.mode === "full" && n === 1;
     $("hudTitle").textContent = L.title;
+    $("speakBtn").classList.remove("pulse");
     setProgress(0, 1);
-    $("introBadge").textContent = S.mode === "full" ? "Level " + L.n + " of 4" : "Practice";
+    $("introBadge").textContent = S.mode === "full" ? "Level " + n + " of " + ORDER.length : "Practice";
     $("introHero").textContent = L.ico;
     $("introTitle").textContent = L.title;
-    var lead = (L.n === 1 && S.mode === "full") ? S.name + ", you’re so brave! " : "";
-    $("introStory").textContent = lead + L.story;
+    $("introStory").textContent = (first ? S.name + ", you’re so brave! " : "") + L.story;
     show("intro");
-    say([(L.n === 1 && S.mode === "full" ? S.name + ", you're so brave! " : "") + L.title + "! " + L.story]);
+    say([(first ? S.name + ", you're so brave! " : "") + L.title + "! " + L.story]);
   }
 
   function beginLevel() {
+    newGen();
     var lv = S.level;
-    if (lv === "story") { S.rounds = STORY.slice(); S.idx = 0; show("story"); renderStory(); return; }
-    S.rounds = lv === "letters" ? makeLetterRounds() : lv === "sounds" ? makeSoundRounds() : makeSightRounds();
-    S.idx = 0; show("game"); renderRound();
+    S.idx = 0;
+    $("hudTitle").textContent = LEVELS[lv].title;
+    show(SCREEN_OF[lv]);
+    if (lv === "story") { S.rounds = STORY.slice(); renderStory(); }
+    else if (lv === "bubbles") { S.rounds = makeBubbleRounds(); renderBubbles(); }
+    else if (lv === "treasure") { S.rounds = makeTreasureBoards(); S.matches = 0; renderTreasure(); }
+    else if (lv === "shells") { S.rounds = makeSentenceRounds(); renderSentence(); }
+    else {
+      S.rounds = lv === "sounds" ? makeSoundRounds() : lv === "sight" ? makeSightRounds() : makeMirrorRounds();
+      renderRound();
+    }
   }
 
   function finishLevel() {
@@ -658,75 +827,82 @@
     if (S.mode === "full" && i < ORDER.length - 1) {
       toast("Level complete! 🎉");
       confetti(26);
-      setTimeout(function () { openIntro(ORDER[i + 1]); }, 1300);
+      later(function () { openIntro(ORDER[i + 1]); }, 1300);
     } else {
       showCrown();
     }
   }
 
-  /* ---------------- Round builders ---------------- */
-  function makeLetterRounds() {
-    var picks = shuffle(LETTERS).slice(0, LEVELS.letters.rounds);
-    // Round types: 0 = same case match (big→big), 1 = little→little, 2 = big→little, 3 = little→big
-    var types = [0, 1, 0, 2, 1, 3, 2, 0, 3, 2];
-    return picks.map(function (U, k) {
-      var t = types[k % types.length];
-      var showCh = (t === 1 || t === 3) ? U.toLowerCase() : U;
-      var ansLower = (t === 1 || t === 2);
-      var target = ansLower ? U.toLowerCase() : U;
-      var avoid = LOOKALIKE[U.toLowerCase()] || "";
-      var pool = shuffle(LETTERS.filter(function (x) { return x !== U && avoid.indexOf(x.toLowerCase()) === -1; }));
-      var opts = [target].concat(pool.slice(0, k < 3 ? 2 : 3).map(function (x) { return ansLower ? x.toLowerCase() : x; }));
-      var label = t === 0 ? "Find the same big letter!" :
-                  t === 1 ? "Find the same little letter!" :
-                  t === 2 ? "Find the little letter for big " + U + "!" :
-                            "Find the big letter for little " + U.toLowerCase() + "!";
-      var spoken = t === 0 ? ["Find " + letterSpeech(U)] :
-                   t === 1 ? ["Find " + letterSpeech(U.toLowerCase())] :
-                   t === 2 ? ["This is " + letterSpeech(U) + ". Can you find " + letterSpeech(U.toLowerCase()) + "?"] :
-                             ["This is " + letterSpeech(U.toLowerCase()) + ". Can you find " + letterSpeech(U) + "?"];
-      return { kind: "letter", label: label, big: showCh, answer: target, options: shuffle(opts), speech: spoken, name: letterName(target) };
-    });
+  function reward(el) {
+    var c = centerOf(el);
+    sparkle(c[0], c[1]);
+    var gain = S.firstTry ? 2 : 1;
+    setPearls(S.pearls + gain, true);
+    if (S.firstTry) { S.stars++; toast("⭐ First try! +2 pearls"); }
+    if (S.pearls > S.best) { S.best = S.pearls; store.set("best", S.best); }
+  }
+  function cheer() { return fill(rand(CHEERS)); }
+  function setFeedback(id, text, good) { $(id).textContent = text; $(id).className = "feedback" + (good ? " good" : ""); }
+  function oops(btn) {
+    S.firstTry = false;
+    btn.classList.remove("oops"); void btn.offsetWidth; btn.classList.add("oops");
+    btn.disabled = true; btn.classList.add("faded");
   }
 
+  /* ================= Round builders (choice games) ================= */
   function makeSoundRounds() {
     return shuffle(SOUNDS).slice(0, LEVELS.sounds.rounds).map(function (s) {
       var pool = shuffle(SOUNDS.filter(function (x) { return x.L !== s.L && x.L !== SAME_SOUND[s.L]; }));
       var opts = [s.L].concat(pool.slice(0, 3).map(function (x) { return x.L; }));
       return {
         kind: "sound", label: "Which letter makes this sound?", pic: s.pic, big: "🐚", ear: true,
-        sub: "“" + s.say + "” … like " + s.word, answer: s.L, options: shuffle(opts),
+        sub: "“" + s.say + "” … like " + s.word, answer: s.L, options: shuffle(opts), say: s.say,
         speech: ["Listen to the shell.", { t: s.say + "... " + s.say + "...", rate: 0.7 }, "like " + s.word + ". Which letter says " + s.say + "?"],
-        win: [{ t: s.L + " says " + s.say + ", like " + s.word + "!" }]
+        win: [s.L + " says " + s.say + ", like " + s.word + "!"]
       };
     });
   }
 
   function makeSightRounds() {
-    var list = shuffle(SIGHT).slice(0, LEVELS.sight.rounds);
-    return list.map(function (s, k) {
-      var pool = shuffle(SIGHT.filter(function (x) { return x.w.toLowerCase() !== s.w.toLowerCase(); }));
-      var opts = [s.w].concat(pool.slice(0, 3).map(function (x) { return x.w; }));
-      // Alternate: "match the word you see" and (if speech works) "listen and find".
-      var listen = (k % 2 === 1) && synth && S.voiceOn;
+    var pool = wordsInSets([1]).map(function (x) { return x.w; });
+    return shuffle(wordsInSets([1])).slice(0, LEVELS.sight.rounds).map(function (s, k) {
+      var opts = [s.w].concat(distractors(pool, s.w, k < 2 ? 2 : 3));
+      var listen = (k % 2 === 1) && canSpeak();
       return {
         kind: "sight", word: true,
         label: listen ? "Listen… then tap the word!" : "Find this word!",
         pic: s.pic, big: listen ? "👂" : s.w, ear: listen, bigWord: !listen,
         sub: listen ? "Tap 🔊 to hear it again" : "",
         answer: s.w, options: shuffle(opts),
-        speech: listen ? ["Find the word.", { t: s.w, rate: 0.75 }] : ["This word is " + s.w + ". Find " + s.w + "."],
-        win: [s.w + "! " + s.line]
+        speech: listen ? ["Find the word.", spoken(s.w)] : ["This word is", spoken(s.w), "Find " + bare(s.w) + "."],
+        win: [bare(s.w) + "! " + s.line]
       };
     });
   }
 
-  /* ---------------- Render: letters/sounds/sight ---------------- */
+  function makeMirrorRounds() {
+    var picks = shuffle(MIRROR).slice(0, LEVELS.mirror.rounds);
+    return picks.map(function (m, k) {
+      var others = shuffle(MIRROR.filter(function (x) { return x.w !== m.w; })).slice(0, k < 2 ? 2 : 3);
+      return {
+        kind: "mirror", mirror: true, pics: true,
+        label: "Read the word in the magic mirror!", pic: "🪞", big: m.w, bigWord: true,
+        sub: "Tap the picture that matches", answer: m.pic,
+        options: shuffle([m.pic].concat(others.map(function (x) { return x.pic; }))),
+        names: [m].concat(others).reduce(function (o, x) { o[x.pic] = x; return o; }, {}),
+        speech: ["Mirror, mirror, what does it say? Read the word, then tap its picture."],
+        win: [{ t: "The word is " + bare(m.w) + "!", rate: 0.85 }, "It goes with " + m.say + "."]
+      };
+    });
+  }
+
+  /* ================= Render: shared choice screen ================= */
   function renderRound() {
     var r = S.rounds[S.idx];
     if (!r) { finishLevel(); return; }
     S.firstTry = true; S.busy = false;
     setProgress(S.idx, S.rounds.length);
+    $("prompt").className = "prompt" + (r.mirror ? " mirror" : "");
     $("gameLabel").textContent = r.label;
     $("promptPic").textContent = r.pic || "";
     var big = $("promptBig");
@@ -734,16 +910,18 @@
     big.className = "prompt-big" + (r.bigWord ? " word" : "") + (r.ear ? " ear" : "");
     big.onclick = r.ear ? sayAgain : null;
     $("promptSub").textContent = r.sub || "";
-    $("feedback").textContent = ""; $("feedback").className = "feedback";
+    setFeedback("feedback", "");
     var box = $("choices");
     box.innerHTML = "";
     box.className = "choices" + (r.options.length === 3 ? " three" : "");
     r.options.forEach(function (opt, i) {
       var b = document.createElement("button");
       b.type = "button";
-      b.className = "choice" + (r.word ? " word" : "");
+      b.className = "choice" + (r.word ? " word" : "") + (r.pics ? " pic" : "");
       b.textContent = opt;
-      b.setAttribute("aria-label", (r.kind === "sight" ? "word " : "letter ") + opt + ", choice " + (i + 1));
+      b.setAttribute("data-pick", "");
+      var label = r.kind === "sound" ? "letter " + opt : r.kind === "mirror" ? "picture of " + r.names[opt].say : "word " + opt;
+      b.setAttribute("aria-label", label + ", choice " + (i + 1));
       b.addEventListener("click", function () { answer(b, opt); });
       box.appendChild(b);
     });
@@ -760,34 +938,233 @@
       var all = $("choices").querySelectorAll(".choice");
       for (var i = 0; i < all.length; i++) { all[i].disabled = true; if (all[i] !== btn) all[i].classList.add("faded"); }
       reward(btn);
-      var cheer = fill(rand(CHEERS));
-      $("feedback").textContent = cheer + (S.firstTry ? " ⭐" : ""); $("feedback").className = "feedback good";
-      if (r.kind === "sound") $("promptSub").textContent = r.answer + " says “" + r.sub.split("”")[0].slice(1) + "”";
+      var c = cheer();
+      setFeedback("feedback", c + (S.firstTry ? " ⭐" : ""), true);
+      if (r.kind === "sound") $("promptSub").textContent = r.answer + " says “" + r.say + "”";
       if (r.kind === "sight") { $("promptBig").textContent = r.answer; $("promptBig").className = "prompt-big word"; }
-      say((r.win || [r.kind === "letter" ? "Yes! " + letterSpeech(r.answer) + "!" : ""]).concat([cheer]));
+      say(r.win.concat([c]));
       setProgress(S.idx + 1, S.rounds.length);
-      setTimeout(function () { S.idx++; renderRound(); }, 1800);
+      later(function () { S.idx++; renderRound(); }, r.kind === "mirror" ? 2600 : 1900);
     } else {
-      S.firstTry = false;
-      btn.classList.remove("oops"); void btn.offsetWidth; btn.classList.add("oops");
-      btn.disabled = true; btn.classList.add("faded");
+      oops(btn);
       var g = rand(GENTLE);
-      $("feedback").textContent = g; $("feedback").className = "feedback";
-      var hint = r.kind === "letter" ? "That one is " + letterSpeech(opt) + ". " : r.kind === "sight" ? "That word is " + opt + ". " : "";
+      setFeedback("feedback", g);
+      var hint = r.kind === "sight" ? "That word is " + bare(opt) + ". " :
+                 r.kind === "mirror" ? "That picture is " + r.names[opt].say + ". " :
+                 r.kind === "sound" ? "That one is " + opt + ". " : "";
       say([hint + g], false);
     }
   }
 
-  function reward(btn) {
-    var c = centerOf(btn);
-    sparkle(c[0], c[1]);
-    var gain = S.firstTry ? 2 : 1;
-    setPearls(S.pearls + gain, true);
-    if (S.firstTry) { S.stars++; toast("⭐ First try! +2 pearls"); }
-    if (S.pearls > S.best) { S.best = S.pearls; store.set("best", S.best); }
+  /* ================= Bubble Pop ================= */
+  function makeBubbleRounds() {
+    // Mostly the new set-2 words, plus a review of set 1.
+    var targets = shuffle(wordsInSets([2])).slice(0, 5).concat(shuffle(wordsInSets([1])).slice(0, 3));
+    targets = shuffle(targets).slice(0, LEVELS.bubbles.rounds);
+    var pool = wordsInSets([1, 2]).map(function (x) { return x.w; });
+    return targets.map(function (t, k) {
+      var listen = canSpeak() && k % 2 === 1;
+      return { answer: t.w, line: t.line, listen: listen, options: shuffle([t.w].concat(distractors(pool, t.w, k < 2 ? 2 : 3))) };
+    });
   }
 
-  /* ---------------- Render: story ---------------- */
+  function renderBubbles() {
+    var r = S.rounds[S.idx];
+    if (!r) { finishLevel(); return; }
+    S.firstTry = true; S.busy = false;
+    setProgress(S.idx, S.rounds.length);
+    $("bubbleLabel").textContent = r.listen ? "Listen… then pop the bubble that says:" : "Pop the bubble that says:";
+    var w = $("bubbleWord");
+    w.textContent = r.listen ? "👂 🔊" : r.answer;
+    w.className = "w" + (r.listen ? " ear" : "");
+    w.onclick = r.listen ? sayAgain : null;
+    setFeedback("bubbleFeedback", "");
+    var tank = $("tank"); tank.innerHTML = "";
+    var n = r.options.length;
+    var tops = [8, 46, 18, 50];
+    r.options.forEach(function (opt, i) {
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "bubble-btn"; b.textContent = opt;
+      b.setAttribute("data-pick", "");
+      b.setAttribute("aria-label", "bubble with word " + opt + ", choice " + (i + 1));
+      var lane = 100 / n;
+      b.style.left = "calc(" + (lane * i + lane / 2) + "% - clamp(50px, 13vw, 75px))";
+      b.style.top = tops[i % tops.length] + "%";
+      b.style.animationDelay = (i * 0.18) + "s, " + (1.1 + i * 0.4) + "s";
+      b.addEventListener("click", function () { popBubble(b, opt); });
+      tank.appendChild(b);
+    });
+    $("speakBtn").classList.toggle("pulse", r.listen);
+    say(r.listen ? ["Listen! Pop the bubble that says", spoken(r.answer)] : ["Pop the bubble that says", spoken(r.answer)]);
+  }
+
+  function popBubble(b, opt) {
+    if (S.busy || b.disabled) return;
+    var r = S.rounds[S.idx];
+    if (opt === r.answer) {
+      S.busy = true;
+      reward(b);
+      b.classList.add("popped");
+      var all = $("tank").querySelectorAll(".bubble-btn");
+      for (var i = 0; i < all.length; i++) all[i].disabled = true;
+      $("bubbleWord").textContent = r.answer; $("bubbleWord").className = "w";
+      var c = cheer();
+      setFeedback("bubbleFeedback", "Pop! " + c + (S.firstTry ? " ⭐" : ""), true);
+      say([{ t: "Pop! " + bare(r.answer) + "!" }, r.line]);
+      setProgress(S.idx + 1, S.rounds.length);
+      later(function () { S.idx++; renderBubbles(); }, 2100);
+    } else {
+      oops(b);
+      var g = rand(GENTLE);
+      setFeedback("bubbleFeedback", g);
+      say(["That bubble says " + bare(opt) + ". " + g], false);
+    }
+  }
+
+  /* ================= Treasure Chest Match ================= */
+  function makeTreasureBoards() {
+    // Two boards of 3 pairs = 6 matches. Set-2 and set-3 words.
+    var words = shuffle(wordsInSets([2, 3])).slice(0, 6).map(function (x) { return x.w; });
+    return [words.slice(0, 3), words.slice(3, 6)].map(function (trio) {
+      return shuffle(trio.concat(trio));
+    });
+  }
+
+  function renderTreasure() {
+    var board = S.rounds[S.idx];
+    if (!board) { finishLevel(); return; }
+    S.firstTry = true; S.busy = false; S.openChest = null;
+    setProgress(S.matches, LEVELS.treasure.rounds);
+    $("hudTitle").textContent = "Treasure Chest Match · Board " + (S.idx + 1) + " of " + S.rounds.length;
+    setFeedback("treasureFeedback", "");
+    var grid = $("chestGrid"); grid.innerHTML = "";
+    board.forEach(function (w, i) {
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "chest";
+      b.setAttribute("data-pick", "");
+      b.setAttribute("aria-label", "treasure chest " + (i + 1) + ", closed");
+      b.innerHTML = '<span class="lock" aria-hidden="true">🔒</span><span class="word">' + esc(w) + "</span>";
+      b.addEventListener("click", function () { openChest(b, w, i); });
+      grid.appendChild(b);
+    });
+    $("speakBtn").classList.remove("pulse");
+    say(S.idx === 0 ? ["Tap a chest to open it. Then find the chest with the same word!"] : ["A new treasure pile! Find the matching words."]);
+  }
+
+  function openChest(b, w, i) {
+    if (S.busy || b.disabled || b.classList.contains("open")) return;
+    b.classList.add("open");
+    b.setAttribute("aria-label", "treasure chest " + (i + 1) + ", word " + w);
+    say([spoken(w)], false);
+    var first = S.openChest;
+    if (!first) { S.openChest = { el: b, w: w }; return; }
+    S.openChest = null;
+    if (first.w === w) {
+      S.busy = true;
+      later(function () {
+        first.el.classList.add("matched"); b.classList.add("matched");
+        first.el.disabled = true; b.disabled = true;
+        reward(b);
+        S.matches++;
+        setProgress(S.matches, LEVELS.treasure.rounds);
+        var c = cheer();
+        setFeedback("treasureFeedback", "A match! " + c + (S.firstTry ? " ⭐" : ""), true);
+        say(["A match! " + bare(w) + " and " + bare(w) + "!", wordObj(w).line]);
+        S.firstTry = true;
+        later(function () {
+          S.busy = false;
+          var left = $("chestGrid").querySelectorAll(".chest:not(.matched)").length;
+          if (!left) { S.idx++; renderTreasure(); }
+        }, 1900);
+      }, 500);
+    } else {
+      S.busy = true; S.firstTry = false;
+      setFeedback("treasureFeedback", "Not a match — remember where they are! 🧠");
+      later(function () {
+        say(["Not a match. Try to remember where they are!"], false);
+      }, 700);
+      later(function () {
+        [first.el, b].forEach(function (el) { el.classList.remove("open"); el.setAttribute("aria-label", el.getAttribute("aria-label").replace(/, word .*/, ", closed")); });
+        S.busy = false;
+      }, 1700);
+    }
+  }
+
+  /* ================= Seashell Sentences ================= */
+  function makeSentenceRounds() {
+    var n = LEVELS.shells.rounds;
+    var short = shuffle(SENTENCES.slice(0, 5)).slice(0, 3);
+    var longer = shuffle(SENTENCES.slice(5)).slice(0, n - 3);
+    return short.concat(longer);
+  }
+
+  function renderSentence() {
+    var s = S.rounds[S.idx];
+    if (!s) { finishLevel(); return; }
+    S.firstTry = true; S.busy = false; S.nextWord = 0;
+    setProgress(S.idx, S.rounds.length);
+    $("sentenceArt").textContent = s.art;
+    setFeedback("shellFeedback", "");
+    var slots = $("slots"); slots.innerHTML = "";
+    s.words.forEach(function (w, i) {
+      var sp = document.createElement("span");
+      sp.className = "slot" + (i === 0 ? " next" : "");
+      sp.textContent = w;
+      slots.appendChild(sp);
+    });
+    var bank = $("shellBank"); bank.innerHTML = "";
+    var order = s.words.map(function (w, i) { return i; });
+    // Shuffle, but never leave the shells already in the correct order.
+    var sh = shuffle(order), tries = 0;
+    while (order.length > 1 && sh.join() === order.join() && tries++ < 10) sh = shuffle(order);
+    sh.forEach(function (idx, k) {
+      var w = s.words[idx], b = bare(w);
+      var btn = document.createElement("button");
+      btn.type = "button"; btn.className = "choice word shell";
+      btn.setAttribute("data-pick", "");
+      btn.setAttribute("aria-label", "shell with word " + b + ", choice " + (k + 1));
+      btn.innerHTML = (NOUN_PICS[b.toLowerCase()] ? '<span class="pic" aria-hidden="true">' + NOUN_PICS[b.toLowerCase()] + "</span>" : "") + "<span>" + esc(b) + "</span>";
+      btn.addEventListener("click", function () { tapShell(btn, b); });
+      bank.appendChild(btn);
+    });
+    $("speakBtn").classList.remove("pulse");
+    say(["Let's build this sentence.", { t: sentenceText(s), rate: 0.8 }, "Which word comes first?"]);
+  }
+  function sentenceText(s) { return s.words.join(" "); }
+
+  function tapShell(btn, b) {
+    if (S.busy || btn.disabled) return;
+    var s = S.rounds[S.idx];
+    var need = bare(s.words[S.nextWord]);
+    if (b.toLowerCase() === need.toLowerCase()) {
+      btn.classList.add("used"); btn.disabled = true;
+      var slots = $("slots").children;
+      slots[S.nextWord].classList.remove("next");
+      slots[S.nextWord].classList.add("filled");
+      S.nextWord++;
+      if (S.nextWord < s.words.length) {
+        slots[S.nextWord].classList.add("next");
+        say([spoken(b)], false);
+        setFeedback("shellFeedback", "Yes! “" + b + "”", true);
+      } else {
+        S.busy = true;
+        reward($("slots"));
+        var c = cheer();
+        setFeedback("shellFeedback", c + (S.firstTry ? " ⭐" : ""), true);
+        say([{ t: sentenceText(s), rate: 0.8 }, c]);
+        setProgress(S.idx + 1, S.rounds.length);
+        later(function () { S.idx++; renderSentence(); }, 2800);
+      }
+    } else {
+      S.firstTry = false;
+      btn.classList.remove("oops"); void btn.offsetWidth; btn.classList.add("oops");
+      var g = rand(GENTLE);
+      setFeedback("shellFeedback", g);
+      say(["That shell says " + b + ". We need", spoken(need)], false);
+    }
+  }
+
+  /* ================= Story Path ================= */
   function renderStory() {
     var p = S.rounds[S.idx];
     if (!p) { finishLevel(); return; }
@@ -802,22 +1179,22 @@
     }).join(" ");
     var spans = $("storyLine").querySelectorAll(".w");
     for (var k = 0; k < spans.length; k++) {
-      spans[k].addEventListener("click", function () { say(this.textContent.replace(/[^\w']/g, ""), false); this.classList.add("lit"); var el = this; setTimeout(function () { el.classList.remove("lit"); }, 600); });
+      spans[k].addEventListener("click", function () { say(bare(this.textContent), false); this.classList.add("lit"); var el = this; setTimeout(function () { el.classList.remove("lit"); }, 600); });
     }
-    $("storyFeedback").textContent = ""; $("storyFeedback").className = "feedback";
+    setFeedback("storyFeedback", "");
     var box = $("storyChoices"); box.innerHTML = "";
     shuffle(p.choices).forEach(function (w, i) {
       var b = document.createElement("button");
       b.type = "button"; b.className = "choice word"; b.textContent = w;
+      b.setAttribute("data-pick", "");
       b.setAttribute("aria-label", "word " + w + ", choice " + (i + 1));
       b.addEventListener("click", function () { storyAnswer(b, w); });
       box.appendChild(b);
     });
     $("speakBtn").classList.remove("pulse");
-    var spoken = p.words.map(function (w) { return /^\{/.test(w) ? "hmm" : w; }).join(" ");
-    say([spoken, "Which word goes in the gap?"]);
+    var sp = p.words.map(function (w) { return /^\{/.test(w) ? "hmm" : w; }).join(" ");
+    say([sp, "Which word goes in the gap?"]);
   }
-
   function answerOf(p) { for (var i = 0; i < p.words.length; i++) { var m = p.words[i].match(/^\{(.+?)\}/); if (m) return m[1]; } return ""; }
   function sentenceOf(p) { return p.words.map(function (w) { return w.replace(/[{}]/g, ""); }).join(" "); }
 
@@ -831,22 +1208,21 @@
       for (var i = 0; i < all.length; i++) { all[i].disabled = true; if (all[i] !== btn) all[i].classList.add("faded"); }
       var bl = $("blank"); bl.textContent = ans; bl.classList.add("filled");
       reward(btn);
-      $("storyFeedback").textContent = p.after; $("storyFeedback").className = "feedback good";
+      setFeedback("storyFeedback", p.after, true);
       say([sentenceOf(p), p.after]);
       setProgress(S.idx + 1, S.rounds.length);
-      setTimeout(function () { S.idx++; renderStory(); }, 3200);
+      later(function () { S.idx++; renderStory(); }, 3200);
     } else {
-      S.firstTry = false;
-      btn.classList.remove("oops"); void btn.offsetWidth; btn.classList.add("oops");
-      btn.disabled = true; btn.classList.add("faded");
+      oops(btn);
       var g = rand(GENTLE);
-      $("storyFeedback").textContent = g; $("storyFeedback").className = "feedback";
+      setFeedback("storyFeedback", g);
       say(["That word is " + w + ". " + g], false);
     }
   }
 
-  /* ---------------- Celebration ---------------- */
+  /* ================= Celebration ================= */
   function showCrown() {
+    newGen();
     $("speakBtn").classList.remove("pulse");
     var total = S.mode === "full" ? ORDER.reduce(function (a, k) { return a + LEVELS[k].rounds; }, 0) : LEVELS[S.level].rounds;
     var ratio = total ? S.stars / total : 0;
@@ -861,21 +1237,22 @@
     $("statBest").textContent = S.best;
     $("againBtn").textContent = S.mode === "single" ? "Play it again 🌟" : "Play again 🌟";
     var ps = $("pearlString"); ps.innerHTML = "";
-    for (var i = 0; i < Math.min(S.pearls, 40); i++) { var d = document.createElement("span"); d.className = "pearl"; d.style.animationDelay = (i * 0.04) + "s"; ps.appendChild(d); }
+    for (var i = 0; i < Math.min(S.pearls, 60); i++) { var d = document.createElement("span"); d.className = "pearl"; d.style.animationDelay = (i * 0.03) + "s"; ps.appendChild(d); }
     show("crown");
     confetti(60);
     setTimeout(function () { sparkle(window.innerWidth / 2, window.innerHeight * 0.25, 20); }, 300);
     say(["You did it, " + S.name + "!", "You found " + S.pearls + " magic pearls. You are a " + rank.replace(/^\S+\s/, "") + "!"]);
   }
 
-  /* ---------------- Map ---------------- */
+  /* ================= Map ================= */
   function openMap() {
-    if (synth) try { synth.cancel(); } catch (e) {}
+    newGen(); hush();
     var grid = $("mapGrid"); grid.innerHTML = "";
     ORDER.forEach(function (k) {
       var L = LEVELS[k];
       var b = document.createElement("button");
       b.type = "button"; b.className = "level-tile";
+      b.setAttribute("data-pick", "");
       b.innerHTML = '<span class="ico" aria-hidden="true">' + L.ico + "</span><span>" + esc(L.title) + '</span><span class="done">' + (S.done[k] ? "👑 Done!" : "") + "</span>";
       b.setAttribute("aria-label", L.title + (S.done[k] ? ", completed" : ""));
       b.addEventListener("click", function () { startSingle(k); });
@@ -886,15 +1263,15 @@
     say("Where shall we swim today, " + S.name + "?");
   }
 
-  /* ---------------- Welcome ---------------- */
+  /* ================= Welcome ================= */
   function refreshWelcome() {
     var saved = store.get("name", "");
-    if (saved) $("nameInput").value = saved;
+    if (saved) { $("nameInput").value = saved; S.name = saved; }
     if (S.best > 0) { $("bestNote").hidden = false; $("bestNote").textContent = "🏆 Best treasure so far: " + S.best + " pearls"; }
     else $("bestNote").hidden = true;
   }
 
-  /* ---------------- Wiring ---------------- */
+  /* ================= Wiring ================= */
   $("startBtn").addEventListener("click", function () { readName(); startFull(); });
   $("nameInput").addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); readName(); startFull(); } });
   $("introGo").addEventListener("click", beginLevel);
@@ -906,27 +1283,27 @@
   $("soundToggle").addEventListener("click", function () {
     S.voiceOn = !S.voiceOn; store.set("voice", S.voiceOn ? "1" : "0");
     this.textContent = "Voice: " + (S.voiceOn ? "on" : "off");
-    if (!S.voiceOn && synth) try { synth.cancel(); } catch (e) {}
-    else say("Hello, " + S.name + "!");
+    if (!S.voiceOn) hush(); else say("Hello, " + S.name + "!");
   });
   $("resetBtn").addEventListener("click", function () {
     if (!window.confirm("Reset the saved name and best score?")) return;
     store.del("name"); store.del("best"); store.del("done");
     S.best = 0; S.done = {}; S.name = "Princess"; $("nameInput").value = "";
-    refreshWelcome(); show("welcome");
+    newGen(); hush(); refreshWelcome(); show("welcome");
   });
 
-  // Keyboard: 1–4 pick answers, Space/R repeats prompt, Enter continues on intro.
+  // Keyboard: 1–9 pick the Nth answer on screen, R repeats the prompt.
   document.addEventListener("keydown", function (e) {
     if (e.target && e.target.tagName === "INPUT") return;
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
     var active = document.querySelector(".screen.active");
     if (!active) return;
-    var id = active.id;
-    if ((e.key === "r" || e.key === "R") && (id === "s-game" || id === "s-story")) { sayAgain(); return; }
-    if (/^[1-4]$/.test(e.key) && (id === "s-game" || id === "s-story")) {
-      var btns = active.querySelectorAll(".choice");
+    var playing = document.body.classList.contains("playing") && active.id !== "s-intro";
+    if ((e.key === "r" || e.key === "R") && playing) { sayAgain(); return; }
+    if (/^[1-9]$/.test(e.key)) {
+      var btns = active.querySelectorAll("[data-pick]");
       var b = btns[parseInt(e.key, 10) - 1];
-      if (b && !b.disabled) b.click();
+      if (b && !b.disabled) { e.preventDefault(); b.click(); }
     }
   });
 
@@ -936,6 +1313,9 @@
   } else {
     $("soundToggle").textContent = "Voice: " + (S.voiceOn ? "on" : "off");
   }
+
+  // Expose read-only hooks for automated testing (no effect on play).
+  window.__ppq = { S: S, ORDER: ORDER, LEVELS: LEVELS, WORDS: WORDS };
 
   buildSea();
   refreshWelcome();
